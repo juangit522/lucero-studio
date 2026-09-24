@@ -1,0 +1,3 @@
+# Archivos locales de impeccable (preferencias y caché de sesión)
+.impeccable/config.local.json
+.impeccable/hook.cache.json

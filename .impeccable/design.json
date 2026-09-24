@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T15:00:00Z",
+  "title": "Design System: LUCERO STUDIO",
+  "extensions": {
+    "colorMeta": {
+      "azul": { "role": "primary", "displayName": "Logo Azul", "canonical": "#16508e", "tonalRamp": ["oklch(15% 0.05 255)", "oklch(25% 0.08 255)", "oklch(35% 0.11 255)", "oklch(43% 0.12 255)", "oklch(55% 0.12 255)", "oklch(67% 0.09 255)", "oklch(80% 0.05 255)", "oklch(95% 0.015 255)"] },
+      "azul-deep": { "role": "primary", "displayName": "Plate Azul", "canonical": "#0e3a6b", "tonalRamp": ["oklch(15% 0.05 256)", "oklch(25% 0.08 256)", "oklch(34% 0.1 256)", "oklch(45% 0.11 256)", "oklch(55% 0.1 256)", "oklch(67% 0.08 256)", "oklch(80% 0.045 256)", "oklch(95% 0.012 256)"] },
+      "azul-night": { "role": "primary", "displayName": "Night Azul", "canonical": "#0a2a4f", "tonalRamp": ["oklch(15% 0.05 257)", "oklch(28% 0.08 257)", "oklch(35% 0.09 257)", "oklch(45% 0.09 257)", "oklch(55% 0.08 257)", "oklch(67% 0.06 257)", "oklch(80% 0.035 257)", "oklch(95% 0.01 257)"] },
+      "airmail-red": { "role": "secondary", "displayName": "Airmail Red", "canonical": "#c8372d", "tonalRamp": ["oklch(15% 0.06 29)", "oklch(25% 0.1 29)", "oklch(35% 0.14 29)", "oklch(45% 0.17 29)", "oklch(55% 0.18 29)", "oklch(65% 0.15 29)", "oklch(80% 0.08 29)", "oklch(95% 0.02 29)"] },
+      "ink": { "role": "neutral", "displayName": "Envelope Ink", "canonical": "#0b2545", "tonalRamp": ["oklch(15% 0.04 258)", "oklch(26% 0.07 258)", "oklch(35% 0.07 258)", "oklch(45% 0.06 258)", "oklch(55% 0.05 258)", "oklch(67% 0.04 258)", "oklch(80% 0.025 258)", "oklch(95% 0.008 258)"] },
+      "ink-soft": { "role": "neutral", "displayName": "Faded Ink", "canonical": "#3a5374", "tonalRamp": ["oklch(15% 0.03 256)", "oklch(25% 0.04 256)", "oklch(35% 0.05 256)", "oklch(44% 0.06 256)", "oklch(55% 0.05 256)", "oklch(67% 0.04 256)", "oklch(80% 0.025 256)", "oklch(95% 0.008 256)"] },
+      "ground": { "role": "neutral", "displayName": "Onionskin", "canonical": "#e3ebf5", "tonalRamp": ["oklch(15% 0.01 255)", "oklch(25% 0.015 255)", "oklch(35% 0.02 255)", "oklch(45% 0.02 255)", "oklch(60% 0.02 255)", "oklch(75% 0.02 255)", "oklch(88% 0.018 255)", "oklch(93.6% 0.015 255)"] },
+      "ground-deep": { "role": "neutral", "displayName": "Onionskin Fold", "canonical": "#d4e0ee", "tonalRamp": ["oklch(15% 0.01 255)", "oklch(25% 0.015 255)", "oklch(35% 0.02 255)", "oklch(45% 0.025 255)", "oklch(60% 0.025 255)", "oklch(75% 0.025 255)", "oklch(89.5% 0.022 255)", "oklch(95% 0.012 255)"] },
+      "paper": { "role": "neutral", "displayName": "Letter Paper", "canonical": "#f7fafd", "tonalRamp": ["oklch(15% 0.005 250)", "oklch(25% 0.005 250)", "oklch(35% 0.006 250)", "oklch(45% 0.006 250)", "oklch(60% 0.006 250)", "oklch(75% 0.006 250)", "oklch(88% 0.006 250)", "oklch(98.3% 0.005 250)"] },
+      "stamp-white": { "role": "neutral", "displayName": "Stamp White", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(60% 0 0)", "oklch(75% 0 0)", "oklch(90% 0 0)", "oklch(100% 0 0)"] },
+      "on-azul": { "role": "neutral", "displayName": "On Azul", "canonical": "#eef4fb", "tonalRamp": ["oklch(15% 0.01 250)", "oklch(25% 0.012 250)", "oklch(35% 0.014 250)", "oklch(45% 0.014 250)", "oklch(60% 0.014 250)", "oklch(75% 0.012 250)", "oklch(88% 0.012 250)", "oklch(96.5% 0.01 250)"] },
+      "on-azul-soft": { "role": "neutral", "displayName": "On Azul Soft", "canonical": "#b9cde6", "tonalRamp": ["oklch(15% 0.02 255)", "oklch(25% 0.03 255)", "oklch(35% 0.04 255)", "oklch(45% 0.045 255)", "oklch(60% 0.045 255)", "oklch(72% 0.045 255)", "oklch(84% 0.04 255)", "oklch(95% 0.015 255)"] },
+      "azul-line": { "role": "neutral", "displayName": "Guide Line", "canonical": "rgba(22, 80, 142, 0.22)" },
+      "azul-faint": { "role": "neutral", "displayName": "Blue Wash", "canonical": "rgba(22, 80, 142, 0.1)" },
+      "error": { "role": "error", "displayName": "Error Red", "canonical": "#b3261e", "tonalRamp": ["oklch(15% 0.06 28)", "oklch(25% 0.1 28)", "oklch(35% 0.13 28)", "oklch(46% 0.17 28)", "oklch(55% 0.17 28)", "oklch(65% 0.14 28)", "oklch(80% 0.07 28)", "oklch(95% 0.02 28)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The single hero h1, expanded to 118% width. Nothing else approaches it." },
+      "headline": { "displayName": "Headline", "purpose": "Section h2s in Logo Azul under a 3px rule; privacy page h1." },
+      "title": { "displayName": "Title", "purpose": "Service titles, route stops, app titles." },
+      "body": { "displayName": "Body", "purpose": "Reading text, 28-68ch measure." },
+      "label": { "displayName": "Label", "purpose": "Uppercase expanded labels for form fields, badges, stamp names and the airmail sticker." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "LUCERO STUDIO beside the logo and as the footer sender." },
+      "typed": { "displayName": "Typed", "purpose": "Courier Prime for visitor input only, on a 2rem ruled line." }
+    },
+    "chevron": {
+      "value": "repeating-linear-gradient(-45deg, #c8372d 0 12px, #f7fafd 12px 24px, #16508e 24px 36px, #f7fafd 36px 48px)",
+      "purpose": "Airmail ribbon: header top band (6px), route band and footer edges (8px), border-image on the envelope (12px), letter and privacy sheets (10px), app cards (6px). The only place decorative red appears."
+    },
+    "shadows": [
+      { "name": "paper", "value": "0 1px 2px rgba(11, 37, 69, 0.08), 0 10px 28px -8px rgba(11, 37, 69, 0.22)", "purpose": "Resting sheets: stamp pane, issue sheet, privacy sheet, app cards." },
+      { "name": "lift", "value": "0 2px 4px rgba(11, 37, 69, 0.1), 0 18px 36px -10px rgba(11, 37, 69, 0.3)", "purpose": "Hero envelope, letter form, app card hover." },
+      { "name": "stamp", "value": "drop-shadow(0 2px 3px rgba(11, 37, 69, 0.18))", "purpose": "Filter shadow on perforated stamps so it follows the holes." },
+      { "name": "button-primary", "value": "0 2px 4px rgba(11, 37, 69, 0.18), 0 8px 18px -8px rgba(14, 58, 107, 0.6)", "purpose": "Primary button at rest." },
+      { "name": "button-primary-hover", "value": "0 4px 8px rgba(11, 37, 69, 0.2), 0 14px 24px -10px rgba(14, 58, 107, 0.65)", "purpose": "Primary button on hover/focus with a 2px lift." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The single easing curve for every transition and animation." },
+      { "name": "transition", "value": "0.3s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default state transitions: buttons, links, fields, cards." },
+      { "name": "paper-settle", "value": "0.8s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Envelope hover: rotates from -3deg to -1.5deg and rises 4px." },
+      { "name": "stamp-in", "value": "0.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Hero postmark stamps in from scale 1.35 and -8deg." },
+      { "name": "sent", "value": "0.55s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "ENVIADO postmark stamps onto the letter at -14deg after a successful send." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "All animation and transition durations collapse under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "1024px" },
+      { "name": "narrow", "value": "860px" },
+      { "name": "phone", "value": "600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action (Escríbenos, Enviar). Logo Azul fill, lifts on hover.",
+      "html": "<a href=\"#\" class=\"ds-btn ds-btn-primary\">Escríbenos</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0.8rem 1.75rem; border: 2px solid #16508e; border-radius: 3px; font-family: Archivo, 'Segoe UI', system-ui, sans-serif; font-size: 1rem; font-weight: 700; font-stretch: 110%; letter-spacing: 0.02em; text-decoration: none; cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary { background-color: #16508e; color: #eef4fb; box-shadow: 0 2px 4px rgba(11, 37, 69, 0.18), 0 8px 18px -8px rgba(14, 58, 107, 0.6); } .ds-btn-primary:hover, .ds-btn-primary:focus-visible { background-color: #0e3a6b; border-color: #0e3a6b; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(11, 37, 69, 0.2), 0 14px 24px -10px rgba(14, 58, 107, 0.65); } .ds-btn:focus-visible { outline: 2px solid #16508e; outline-offset: 3px; } .ds-btn:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary action (Ver proyectos). Outlined in Logo Azul, fills with paper on hover.",
+      "html": "<a href=\"#\" class=\"ds-btn-secondary\">Ver proyectos</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0.8rem 1.75rem; border: 2px solid #16508e; border-radius: 3px; background-color: transparent; color: #16508e; font-family: Archivo, 'Segoe UI', system-ui, sans-serif; font-size: 1rem; font-weight: 700; font-stretch: 110%; letter-spacing: 0.02em; text-decoration: none; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover, .ds-btn-secondary:focus-visible { background-color: #f7fafd; transform: translateY(-2px); } .ds-btn-secondary:focus-visible { outline: 2px solid #16508e; outline-offset: 3px; } .ds-btn-secondary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Letter Field",
+      "kind": "input",
+      "refersTo": "input-letter",
+      "description": "Form field as a line on letter paper: uppercase blue label, Courier Prime input on a hairline baseline.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field-label\" for=\"ds-name\">Nombre</label><input class=\"ds-field-input\" id=\"ds-name\" type=\"text\"></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 0.35rem; padding: 1.5rem; background: #f7fafd; } .ds-field-label { font-family: Archivo, 'Segoe UI', system-ui, sans-serif; font-size: 0.78rem; font-weight: 800; font-stretch: 120%; letter-spacing: 0.1em; text-transform: uppercase; color: #16508e; } .ds-field-input { width: 100%; padding: 0.55rem 0.1rem; font-family: 'Courier Prime', 'Courier New', monospace; font-size: 1.05rem; color: #0b2545; background-color: transparent; border: 0; border-bottom: 1.5px solid rgba(22, 80, 142, 0.22); border-radius: 0; transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-field-input:hover { border-bottom-color: #16508e; } .ds-field-input:focus { outline: none; border-bottom-color: #16508e; background-color: rgba(22, 80, 142, 0.1); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "button-nav",
+      "description": "Header on onionskin with a chevron band on top, round logo and expanded wordmark, links that draw an address-line underline.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-logo\" href=\"#\"><span class=\"ds-nav-mark\"></span><span class=\"ds-nav-word\">LUCERO STUDIO</span></a><nav><a class=\"ds-nav-link\" href=\"#\">Servicios</a><a class=\"ds-nav-link\" href=\"#\">Proyectos</a><a class=\"ds-nav-link\" href=\"#\">Contacto</a></nav><a class=\"ds-nav-btn\" href=\"#\">Escríbenos</a></header>",
+      "css": ".ds-nav { position: relative; display: flex; align-items: center; gap: 2rem; height: 78px; padding: 6px 2rem 0; background: #e3ebf5; border-bottom: 1px solid rgba(22, 80, 142, 0.22); font-family: Archivo, 'Segoe UI', system-ui, sans-serif; } .ds-nav::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(-45deg, #c8372d 0 12px, #f7fafd 12px 24px, #16508e 24px 36px, #f7fafd 36px 48px); } .ds-nav-logo { display: inline-flex; align-items: center; gap: 0.75rem; margin-right: auto; text-decoration: none; } .ds-nav-mark { width: 44px; height: 44px; border-radius: 50%; background: #0e3a6b; } .ds-nav-word { font-size: 1.05rem; font-weight: 800; font-stretch: 125%; letter-spacing: 0.08em; color: #16508e; } .ds-nav nav { display: flex; gap: 0.25rem; } .ds-nav-link { position: relative; padding: 0.5rem 0.85rem; font-size: 0.95rem; font-weight: 600; color: #3a5374; text-decoration: none; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav-link::after { content: ''; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.3rem; height: 2px; background: #16508e; transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav-link:hover, .ds-nav-link:focus-visible { color: #16508e; } .ds-nav-link:hover::after, .ds-nav-link:focus-visible::after { transform: scaleX(1); } .ds-nav-btn { display: inline-flex; align-items: center; min-height: 42px; padding: 0.5rem 1.15rem; border: 2px solid #16508e; border-radius: 3px; background: #16508e; color: #eef4fb; font-size: 0.92rem; font-weight: 700; font-stretch: 110%; text-decoration: none; transition: background-color 0.3s, transform 0.3s; } .ds-nav-btn:hover, .ds-nav-btn:focus-visible { background: #0e3a6b; border-color: #0e3a6b; transform: translateY(-2px); }"
+    },
+    {
+      "name": "Letter Sheet",
+      "kind": "card",
+      "refersTo": "paper-sheet",
+      "description": "Paper sheet on onionskin: square corners, chevron top edge, lift shadow. Used for the letter form and the privacy page.",
+      "html": "<div class=\"ds-ground\"><article class=\"ds-sheet\"><p class=\"ds-sheet-salutation\">Querido equipo de LUCERO STUDIO:</p><p class=\"ds-sheet-body\">Tu mensaje lo leen y lo responden las mismas personas que diseñarán y programarán tu proyecto.</p></article></div>",
+      "css": ".ds-ground { padding: 2rem; background: #e3ebf5; } .ds-sheet { padding: 2rem; background-color: #f7fafd; border-top: 10px solid transparent; border-image: repeating-linear-gradient(-45deg, #c8372d 0 12px, #f7fafd 12px 24px, #16508e 24px 36px, #f7fafd 36px 48px) 10; box-shadow: 0 2px 4px rgba(11, 37, 69, 0.1), 0 18px 36px -10px rgba(11, 37, 69, 0.3); font-family: Archivo, 'Segoe UI', system-ui, sans-serif; } .ds-sheet-salutation { font-size: 1.15rem; font-weight: 600; color: #0e3a6b; margin: 0 0 0.75rem; } .ds-sheet-body { color: #3a5374; line-height: 1.6; margin: 0; }"
+    },
+    {
+      "name": "Perforated Stamp",
+      "kind": "custom",
+      "refersTo": "stamp-face",
+      "description": "Stamp with CSS perforations (holes in the colour of the surface beneath), Plate Azul face, inset frame line and uppercase stamp name.",
+      "html": "<div class=\"ds-stamp-ground\"><div class=\"ds-stamp\"><div class=\"ds-stamp-face\"><span class=\"ds-stamp-art\"></span><span class=\"ds-stamp-name\">Android</span></div></div></div>",
+      "css": ".ds-stamp-ground { display: inline-block; padding: 1.5rem; background: #d4e0ee; } .ds-stamp { width: 150px; padding: 8px; background: radial-gradient(circle, #d4e0ee 3.5px, transparent 4px) -6px -6px / 12px 12px round, #ffffff; filter: drop-shadow(0 2px 3px rgba(11, 37, 69, 0.18)); } .ds-stamp-face { aspect-ratio: 4 / 5; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 1rem 0.75rem; background-color: #0e3a6b; color: #eef4fb; outline: 1px solid #b9cde6; outline-offset: -7px; } .ds-stamp-art { width: 54%; aspect-ratio: 1; margin-top: 0.5rem; border: 1.4px solid currentColor; border-radius: 50%; } .ds-stamp-name { font-family: Archivo, 'Segoe UI', system-ui, sans-serif; font-size: 0.66rem; font-weight: 800; font-stretch: 125%; letter-spacing: 0.12em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Postmark",
+      "kind": "custom",
+      "description": "Circular postmark with ring text and wave cancellations in Logo Azul, multiply-blended over paper; stamps in on load.",
+      "html": "<div class=\"ds-pm-ground\"><svg class=\"ds-postmark\" viewBox=\"0 0 220 120\"><defs><path id=\"ds-pm-arc\" d=\"M19,60 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0\"/></defs><circle cx=\"60\" cy=\"60\" r=\"50\"/><circle cx=\"60\" cy=\"60\" r=\"32\"/><text class=\"ds-pm-ring\"><textPath href=\"#ds-pm-arc\" textLength=\"252\">LUCERO STUDIO · HECHO A MEDIDA ·</textPath></text><text class=\"ds-pm-center\" x=\"60\" y=\"64\">ENVIADO</text><path class=\"ds-pm-wave\" d=\"M112,36 q12,-9 24,0 t24,0 t24,0 t24,0\"/><path class=\"ds-pm-wave\" d=\"M112,52 q12,-9 24,0 t24,0 t24,0 t24,0\"/><path class=\"ds-pm-wave\" d=\"M112,68 q12,-9 24,0 t24,0 t24,0 t24,0\"/><path class=\"ds-pm-wave\" d=\"M112,84 q12,-9 24,0 t24,0 t24,0 t24,0\"/></svg></div>",
+      "css": ".ds-pm-ground { padding: 1.5rem; background: #f7fafd; } .ds-postmark { width: 220px; fill: none; stroke: #16508e; stroke-width: 2; opacity: 0.78; mix-blend-mode: multiply; animation: ds-stamp-in 0.7s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; } .ds-postmark text { fill: #16508e; stroke: none; font-family: Archivo, 'Segoe UI', system-ui, sans-serif; font-weight: 800; font-stretch: 115%; text-anchor: middle; } .ds-pm-ring { font-size: 10.5px; letter-spacing: 0.04em; } .ds-pm-center { font-size: 12px; } .ds-pm-wave { stroke-linecap: round; } @keyframes ds-stamp-in { from { opacity: 0; transform: scale(1.35) rotate(-8deg); } to { opacity: 0.78; transform: scale(1) rotate(0); } }"
+    },
+    {
+      "name": "Coming Soon Badge",
+      "kind": "chip",
+      "refersTo": "soon-badge",
+      "description": "Outlined uppercase badge for truthful 'próximamente' states.",
+      "html": "<span class=\"ds-badge\">Próximamente en Google Play</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; padding: 0.55rem 1rem; border: 1.5px solid #16508e; color: #16508e; font-family: Archivo, 'Segoe UI', system-ui, sans-serif; font-size: 0.8rem; font-weight: 800; font-stretch: 120%; letter-spacing: 0.08em; text-transform: uppercase; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Correo Aéreo",
+    "overview": "The site is an airmail aerogramme: a letter answered by the people who build. Pale blue onionskin ground, sheets of white and near-white paper laid on it, the logo's blue used as ink and as the colour of the stamp printer's plate. Every section is a piece of correspondence: the hero is an addressed envelope, services are a pane of perforated stamps with a catalogue entry beside it, the process is a postal route, the apps are the next issue, and the contact form is ruled letter paper with a typewriter hand.\n\nDensity is calm and editorial. One display headline outranks everything else; section heads sit a clear step below it, each under a full-width 3px blue rule. Paper objects (envelope, stamp pane, issue sheet) tilt a few degrees and cast soft, layered paper shadows; interface chrome (header, buttons, fields, nav) stays square to the grid. Red appears only inside the airmail chevron ribbon that edges the header, the route band, the footer and the paper sheets.\n\nThe world rejects the dark neon tech-agency look and its opposite, the white SaaS card grid. It is a postal world built entirely in code: stamps, postmarks and chevrons are CSS and inline SVG, and the only raster is the brand's own logo.",
+    "keyCharacteristics": [
+      "Onionskin-blue ground with paper sheets on top, never white-on-white.",
+      "Airmail chevron (red / paper / azul / paper at -45deg) as the recurring edge device.",
+      "Archivo at expanded widths (112-125%) for display, labels and the wordmark; Courier Prime only for what the visitor types.",
+      "Perforated stamps, circular postmarks with wave cancellations, ruled letter lines.",
+      "Soft two-layer paper shadows; slight tilts on paper objects only.",
+      "A \"ENVIADO\" postmark stamps onto the letter when the form sends successfully."
+    ],
+    "rules": [
+      { "name": "The One Red Rule", "body": "Decorative red lives only in the chevron ribbon. Error red is functional and appears only on invalid fields and failed status. No red text, red buttons or red postmarks.", "section": "colors" },
+      { "name": "The Reserved Blue Rule", "body": "Logo Azul as a solid fill is reserved for the primary action, button hover/active states, the skip link and selection. Large fields (bands, stamps, labels) use Plate Azul or Night Azul.", "section": "colors" },
+      { "name": "The Typewriter Rule", "body": "Courier Prime appears only in what the visitor types. Studio copy is always Archivo.", "section": "typography" },
+      { "name": "The One Headline Rule", "body": "The hero h1 outranks everything; no other heading approaches its size. Section heads stay a clear step below.", "section": "typography" },
+      { "name": "The Paper Tilt Rule", "body": "Paper objects may rotate between -1deg and -3deg (envelope -3deg, stamp pane -1deg, issue sheet -1.5deg). Header, buttons, fields and text never rotate.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do edge major paper and bands with the airmail chevron (red / paper / azul / paper, 12px stripes at -45deg).",
+      "Do open every section with a head under a 3px Logo Azul rule, the h2 at a clear step below the hero headline.",
+      "Do set expanded Archivo (112-125% width) for display, wordmark and uppercase labels; normal width for reading.",
+      "Do give paper objects the Paper or Lift shadow and, where they are objects rather than chrome, a -1deg to -3deg tilt.",
+      "Do build postal artefacts (stamps, postmarks, rulings) in CSS and inline SVG in the blue family.",
+      "Do keep Logo Azul fills for the primary action and interactive states; use Plate or Night Azul for fields."
+    ],
+    "donts": [
+      "Don't use red anywhere outside the chevron ribbon, except Error Red on invalid fields and failed status.",
+      "Don't use Courier Prime for studio copy.",
+      "Don't use hard offset shadows, glows or neon; depth is soft paper shadow.",
+      "Don't round sheets, stamps or fields; only buttons take the 3px radius and only logo, marks and postmarks are circles.",
+      "Don't rotate interface chrome (header, buttons, fields, text blocks).",
+      "Don't put small uppercase labels above headings; section heads open with the rule and the h2.",
+      "Don't set type on a pure white page; the ground is always onionskin blue with paper laid on it."
+    ]
+  }
+}
