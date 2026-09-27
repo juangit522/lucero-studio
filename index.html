@@ -11,8 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Courier+Prime&display=swap">
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link rel="stylesheet" href="styles.css"></head>
 <body>
 
     <a href="#contenido" class="skip-link">Saltar al contenido</a>
@@ -47,6 +46,10 @@
                     <a href="#contacto" class="btn btn-primary">Escríbenos</a>
                     <a href="#proyectos" class="btn btn-secondary">Ver proyectos</a>
                 </div>
+                <p class="availability">
+                    <span class="availability-dot" aria-hidden="true"></span>
+                    Disponible para nuevos proyectos
+                </p>
             </div>
 
             <!-- Sobre de correo aéreo (decorativo) -->
@@ -123,22 +126,39 @@
                     </div>
                 </div>
 
+                <!-- Cada ficha enlaza al formulario; script.js anota el servicio en el mensaje si está vacío -->
                 <div class="catalog">
-                    <article class="service">
+                    <article class="service reveal">
                         <h3 class="service-title">Desarrollo de apps Android</h3>
                         <p class="service-text">Creamos aplicaciones nativas para Android rápidas, estables y seguras, desde la primera versión (MVP) hasta el producto completo.</p>
+                        <div class="service-foot">
+                            <span class="service-number" aria-hidden="true">N.º 01</span>
+                            <a href="#contacto" class="service-link" data-service="Desarrollo de apps Android">Consultar <span class="visually-hidden">sobre desarrollo de apps Android</span><span class="service-arrow" aria-hidden="true">→</span></a>
+                        </div>
                     </article>
-                    <article class="service">
+                    <article class="service reveal">
                         <h3 class="service-title">Soluciones web a medida</h3>
                         <p class="service-text">Desarrollamos sitios y aplicaciones web a la medida de tu negocio, rápidos y adaptados a cualquier pantalla.</p>
+                        <div class="service-foot">
+                            <span class="service-number" aria-hidden="true">N.º 02</span>
+                            <a href="#contacto" class="service-link" data-service="Soluciones web a medida">Consultar <span class="visually-hidden">sobre soluciones web a medida</span><span class="service-arrow" aria-hidden="true">→</span></a>
+                        </div>
                     </article>
-                    <article class="service">
+                    <article class="service reveal">
                         <h3 class="service-title">Diseño UI/UX móvil</h3>
                         <p class="service-text">Diseñamos interfaces claras y atractivas, con prototipos interactivos para validar la experiencia antes de programar.</p>
+                        <div class="service-foot">
+                            <span class="service-number" aria-hidden="true">N.º 03</span>
+                            <a href="#contacto" class="service-link" data-service="Diseño UI/UX móvil">Consultar <span class="visually-hidden">sobre diseño UI/UX móvil</span><span class="service-arrow" aria-hidden="true">→</span></a>
+                        </div>
                     </article>
-                    <article class="service">
+                    <article class="service reveal">
                         <h3 class="service-title">Publicación y mantenimiento</h3>
                         <p class="service-text">Publicamos tu app en Google Play y la mantenemos al día con actualizaciones, corrección de errores y mejoras continuas.</p>
+                        <div class="service-foot">
+                            <span class="service-number" aria-hidden="true">N.º 04</span>
+                            <a href="#contacto" class="service-link" data-service="Publicación y mantenimiento">Consultar <span class="visually-hidden">sobre publicación y mantenimiento</span><span class="service-arrow" aria-hidden="true">→</span></a>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -183,9 +203,9 @@
             </div>
 
             <div class="apps-grid">
-                <article class="app-card">
+                <article class="app-card reveal">
                     <div class="app-icon app-icon-text" aria-hidden="true">xG</div>
-                    <h3 class="app-title">xG Predictor — Modelo de Predicción de Fútbol</h3>
+                    <h3 class="app-title">xG Predictor <span class="app-subtitle">Modelo de predicción de fútbol</span></h3>
                     <p class="app-description">
                         Aplicación web interactiva que analiza métricas de Expected Goals (xG) y estadísticas de
                         rendimiento para calcular probabilidades en tiempo real de las principales ligas europeas

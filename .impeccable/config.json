@@ -20,6 +20,24 @@
         ],
         "createdAt": "2026-09-23T19:50:14.770Z",
         "reason": "model triage: flagged rules are full-width airmail chevron bands (.header::before, .footer::before), not card side accents"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-27T16:03:05.169Z",
+        "reason": "Claude: falsos positivos en .envelope (padding clamp(1.25rem,3vw,2rem) + borde 12px) y .route (padding en su .route-inner)"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-27T16:03:06.516Z",
+        "reason": "Claude: el único texto largo en mayúsculas es .pane-selvage (43 caracteres, aria-hidden), rótulo postal decorativo según DESIGN.md"
       }
     ]
   }

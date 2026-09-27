@@ -326,3 +326,44 @@
 
     form.addEventListener("submit", handleSubmit);
 })();
+
+/* =========================================================
+   Interfaz: aparición al hacer scroll y fichas de servicio.
+   Independiente del formulario: si falla, el contenido sigue visible.
+   ========================================================= */
+(function () {
+    "use strict";
+
+    /* ---------- Aparición escalonada (una sola vez por elemento) ---------- */
+    const MAX_STAGGER = 5; // a partir del 6.º, entran con el último
+    const items = document.querySelectorAll(".reveal");
+
+    if (items.length && "IntersectionObserver" in window) {
+        items.forEach((item) => {
+            const siblings = Array.from(item.parentElement.children).filter((el) => el.classList.contains("reveal"));
+            item.style.setProperty("--i", Math.min(siblings.indexOf(item), MAX_STAGGER));
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+            });
+        }, { rootMargin: "0px 0px -10% 0px" });
+
+        document.documentElement.classList.add("reveal-ready");
+        items.forEach((item) => observer.observe(item));
+    }
+
+    /* ---------- "Consultar" en un servicio: lo anota en la carta si está vacía ---------- */
+    const message = document.getElementById("message");
+    if (!message) return;
+
+    document.querySelectorAll(".service-link[data-service]").forEach((link) => {
+        link.addEventListener("click", () => {
+            if (message.value.trim()) return;
+            message.value = "Hola, me interesa: " + link.dataset.service + ". ";
+        });
+    });
+})();

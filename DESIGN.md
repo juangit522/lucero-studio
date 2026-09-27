@@ -8,6 +8,7 @@ colors:
   airmail-red: "#c8372d"
   ink: "#0b2545"
   ink-soft: "#3a5374"
+  ink-faint: "#4a6282"
   ground: "#e3ebf5"
   ground-deep: "#d4e0ee"
   paper: "#f7fafd"
@@ -161,6 +162,7 @@ A single committed blue family on pale blue paper, with the airmail red confined
 ### Neutral
 - **Envelope Ink** (ink): body text, h1, titles, typed input.
 - **Faded Ink** (ink-soft): lead paragraphs, section intros, secondary copy, nav links at rest.
+- **Pale Ink** (ink-faint): tertiary copy only (form privacy note, legal "updated" date, catalogue numbers); 5.2:1 on Onionskin, never below AA.
 - **Onionskin** (ground): the page ground and header background.
 - **Onionskin Fold** (ground-deep): scrollbar track and the perforation holes in the stamp pane.
 - **Letter Paper** (paper): envelope, letter form, issue sheet, privacy sheet, app cards; perforation holes on the hero stamp.

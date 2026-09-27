@@ -9,17 +9,22 @@
     --ground: #e3ebf5;          /* aerograma: papel cebolla azul pálido */
     --ground-deep: #d4e0ee;
     --paper: #f7fafd;           /* hoja de carta y sobre */
+    --paper-wash: rgba(247, 250, 253, 0.55);   /* ficha en reposo: papel apenas posado */
 
     /* Tinta */
     --ink: #0b2545;             /* texto principal */
-    --ink-soft: #3a5374;        /* texto secundario */
+    --ink-soft: #3a5374;        /* texto secundario (6.5:1 sobre ground) */
+    --ink-faint: #4a6282;       /* texto terciario: notas y pies (5.2:1 sobre ground) */
     --azul: #16508e;            /* azul del logo */
     --azul-deep: #0e3a6b;
     --azul-night: #0a2a4f;
     --azul-line: rgba(22, 80, 142, 0.22);
+    --azul-line-strong: rgba(22, 80, 142, 0.45);
     --azul-faint: rgba(22, 80, 142, 0.1);
     --on-azul: #eef4fb;
     --on-azul-soft: #b9cde6;
+    --on-azul-line: rgba(238, 244, 251, 0.2);    /* bordes sobre zonas oscuras */
+    --on-azul-hair: rgba(238, 244, 251, 0.12);   /* divisores tenues sobre zonas oscuras */
     --red: #c8372d;             /* solo en el ribete de correo aéreo */
     --error: #b3261e;
 
@@ -42,13 +47,37 @@
     --gutter: clamp(1rem, 4vw, 2.5rem);
     --radius: 3px;
 
-    /* Profundidad: sombras con desplazamiento, papel sobre papel */
+    /* Profundidad: sombras en dos capas (contacto + ambiental) teñidas de tinta */
     --shadow-paper: 0 1px 2px rgba(11, 37, 69, 0.08), 0 10px 28px -8px rgba(11, 37, 69, 0.22);
     --shadow-lift: 0 2px 4px rgba(11, 37, 69, 0.1), 0 18px 36px -10px rgba(11, 37, 69, 0.3);
+    --shadow-stamp: drop-shadow(0 2px 3px rgba(11, 37, 69, 0.18));
+    /* Botón primario: filo de luz arriba (tinta fresca) + contacto + ambiental */
+    --btn-edge: inset 0 1px 0 rgba(238, 244, 251, 0.22);
+    --shadow-btn: var(--btn-edge), 0 2px 4px rgba(11, 37, 69, 0.18), 0 8px 18px -8px rgba(14, 58, 107, 0.6);
+    --shadow-btn-hover: var(--btn-edge), 0 4px 8px rgba(11, 37, 69, 0.2), 0 14px 24px -10px rgba(14, 58, 107, 0.65);
+    --shadow-btn-active: var(--btn-edge), 0 1px 2px rgba(11, 37, 69, 0.2), 0 4px 10px -6px rgba(14, 58, 107, 0.5);
+    /* Botón secundario y fichas: el papel se levanta sobre la mesa */
+    --shadow-soft: 0 1px 2px rgba(11, 37, 69, 0.08), 0 8px 16px -8px rgba(11, 37, 69, 0.22);
+    --shadow-pressed: 0 1px 2px rgba(11, 37, 69, 0.1);
+    /* Canto de hoja: hairline interior que no altera el tamaño */
+    --edge: inset 0 0 0 1px var(--azul-line);
+    --edge-strong: inset 0 0 0 1px var(--azul-line-strong);
 
-    /* Movimiento */
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --transition: 0.3s var(--ease);
+    /* Movimiento: duraciones */
+    --dur-instant: 100ms;   /* color de enlaces, cambios de estado mínimos */
+    --dur-fast: 150ms;      /* hover, active, foco */
+    --dur-base: 200ms;      /* botones, tarjetas, bordes, sombras */
+    --dur-slow: 300ms;      /* aparición de paneles y mensajes de estado */
+    /* Excepción documentada en CLAUDE.md: coreografía única, no interacción */
+    --dur-stamp: 700ms;     /* matasellos del hero al cargar */
+    --dur-sent: 550ms;      /* matasellos "ENVIADO" tras el envío */
+    --dur-pulse: 2400ms;    /* piloto de "Disponible", indicador de estado continuo */
+    --stagger: 50ms;        /* retardo entre elementos de una lista que aparece */
+
+    /* Movimiento: curvas */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);   /* salida expresiva: coreografía de carga */
 }
 
 /* ===== Reset básico ===== */
@@ -130,7 +159,6 @@ p {
     background: var(--azul);
     color: var(--on-azul);
     font-weight: 700;
-    transition: top var(--transition);
 }
 
 .skip-link:focus {
@@ -184,7 +212,7 @@ p {
     flex-shrink: 0;
     border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.6s var(--ease);
+    transition: transform var(--dur-base) var(--ease-out);
 }
 
 .logo-text {
@@ -197,8 +225,15 @@ p {
     color: var(--azul);
 }
 
-.logo:hover .logo-img {
-    transform: rotate(-12deg);
+@media (hover: hover) and (pointer: fine) {
+    .logo:hover .logo-img {
+        transform: rotate(-12deg);
+    }
+}
+
+.logo:active .logo-img {
+    transform: rotate(-12deg) scale(0.95);
+    transition-duration: var(--dur-instant);
 }
 
 .nav-links {
@@ -213,7 +248,7 @@ p {
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--ink-soft);
-    transition: color var(--transition);
+    transition: color var(--dur-fast) var(--ease-out);
 }
 
 /* Subrayado que se traza como una línea de dirección */
@@ -227,17 +262,32 @@ p {
     background: var(--azul);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--transition);
+    transition: transform var(--dur-base) var(--ease-out);
 }
 
-.nav-links a:hover,
+/* El foco de teclado no se anima: el subrayado aparece al instante */
 .nav-links a:focus-visible {
     color: var(--azul);
 }
 
-.nav-links a:hover::after,
 .nav-links a:focus-visible::after {
     transform: scaleX(1);
+    transition: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .nav-links a:hover {
+        color: var(--azul);
+    }
+
+    .nav-links a:hover::after {
+        transform: scaleX(1);
+    }
+}
+
+.nav-links a:active {
+    color: var(--azul-deep);
+    transition-duration: var(--dur-instant);
 }
 
 /* ===== Botones ===== */
@@ -255,28 +305,24 @@ p {
     font-stretch: 110%;
     letter-spacing: 0.02em;
     cursor: pointer;
-    transition: transform var(--transition), box-shadow var(--transition),
-        background-color var(--transition), color var(--transition),
-        border-color var(--transition);
-}
-
-.btn:active {
-    transform: translateY(1px);
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        box-shadow var(--dur-base) var(--ease-out),
+        background-color var(--dur-fast) var(--ease-out),
+        color var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out);
 }
 
 /* El azul pleno se reserva para la acción principal */
 .btn-primary {
     background-color: var(--azul);
     color: var(--on-azul);
-    box-shadow: 0 2px 4px rgba(11, 37, 69, 0.18), 0 8px 18px -8px rgba(14, 58, 107, 0.6);
+    box-shadow: var(--shadow-btn);
 }
 
-.btn-primary:hover,
 .btn-primary:focus-visible {
     background-color: var(--azul-deep);
     border-color: var(--azul-deep);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(11, 37, 69, 0.2), 0 14px 24px -10px rgba(14, 58, 107, 0.65);
 }
 
 .btn-secondary {
@@ -284,10 +330,39 @@ p {
     color: var(--azul);
 }
 
-.btn-secondary:hover,
 .btn-secondary:focus-visible {
     background-color: var(--paper);
-    transform: translateY(-2px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--azul-deep);
+        border-color: var(--azul-deep);
+        box-shadow: var(--shadow-btn-hover);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--paper);
+        box-shadow: var(--shadow-soft);
+    }
+}
+
+/* Pulsación: el papel se aprieta contra la mesa */
+.btn:active {
+    transform: translateY(1px) scale(0.98);
+    transition-duration: var(--dur-instant);
+}
+
+.btn-primary:active {
+    box-shadow: var(--shadow-btn-active);
+}
+
+.btn-secondary:active {
+    box-shadow: var(--shadow-pressed);
 }
 
 .btn-nav {
@@ -332,6 +407,51 @@ p {
     gap: 0.9rem;
 }
 
+/* Disponibilidad: etiqueta de estado con piloto encendido */
+.availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 1.75rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--azul-line);
+    background-color: var(--paper-wash);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.availability-dot {
+    position: relative;
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--azul);
+}
+
+/* Onda que se expande y se apaga; excepción documentada en CLAUDE.md */
+.availability-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--azul);
+    animation: pulse var(--dur-pulse) var(--ease-out) infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.55;
+    }
+    70%,
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
 /* ----- Sobre de correo aéreo ----- */
 .envelope {
     position: relative;
@@ -347,11 +467,13 @@ p {
     border-image: var(--chevron) 12;
     box-shadow: var(--shadow-lift);
     transform: rotate(-3deg);
-    transition: transform 0.8s var(--ease);
+    transition: transform var(--dur-base) var(--ease-out);
 }
 
-.envelope:hover {
-    transform: rotate(-1.5deg) translateY(-4px);
+@media (hover: hover) and (pointer: fine) {
+    .envelope:hover {
+        transform: rotate(-1.5deg) translateY(-4px);
+    }
 }
 
 .envelope-top {
@@ -402,7 +524,7 @@ p {
     stroke-width: 2;
     opacity: 0.78;
     mix-blend-mode: multiply;
-    animation: stamp-in 0.7s 0.5s var(--ease) both;
+    animation: stamp-in var(--dur-stamp) 0.5s var(--ease) both;
 }
 
 .postmark text,
@@ -438,7 +560,7 @@ p {
     background:
         radial-gradient(circle, var(--hole) 4px, transparent 4.6px) -6px -6px / 12px 12px round,
         var(--stamp-paper);
-    filter: drop-shadow(0 2px 3px rgba(11, 37, 69, 0.18));
+    filter: var(--shadow-stamp);
 }
 
 .stamp-logo {
@@ -524,9 +646,9 @@ p {
 /* ===== Servicios: pliego de sellos + ficha de catálogo ===== */
 .services {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     gap: clamp(2.5rem, 5vw, 5rem);
-    align-items: start;
+    align-items: center;
 }
 
 /* El pliego: sellos unidos que comparten perforaciones */
@@ -554,7 +676,9 @@ p {
 }
 
 .pane-stamp {
+    position: relative;
     padding: 8px;
+    transition: transform var(--dur-base) var(--ease-out);
     background:
         radial-gradient(circle, var(--ground-deep) 3.5px, transparent 4px) -6px -6px / 12px 12px round,
         #ffffff;
@@ -605,26 +729,142 @@ p {
     line-height: 1.2;
 }
 
-/* Ficha de catálogo */
+/* Ficha de catálogo: grilla de fichas que se levantan como papel */
 .catalog {
-    border-top: 1px solid var(--azul-line);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
 }
 
 .service {
-    padding: 1.4rem 0;
-    border-bottom: 1px solid var(--azul-line);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.4rem 1.1rem;
+    background-color: var(--paper-wash);
+    box-shadow: var(--edge);
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        box-shadow var(--dur-base) var(--ease-out),
+        background-color var(--dur-fast) var(--ease-out);
 }
 
 .service-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 800;
     line-height: 1.2;
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.55rem;
 }
 
 .service-text {
+    flex-grow: 1;
+    font-size: 0.98rem;
     color: var(--ink-soft);
-    max-width: 48ch;
+}
+
+.service-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--azul-line);
+}
+
+.service-number {
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-stretch: 120%;
+    letter-spacing: 0.1em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    transition: color var(--dur-fast) var(--ease-out);
+}
+
+.service-link {
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-stretch: 110%;
+    color: var(--azul);
+}
+
+/* Toda la ficha es el área pulsable */
+.service-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.service-link:focus-visible {
+    outline: none;
+}
+
+.service:has(.service-link:focus-visible) {
+    outline: 2px solid var(--azul);
+    outline-offset: 3px;
+}
+
+.service-arrow {
+    display: inline-block;
+    margin-left: 0.35rem;
+    transition: transform var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .service:hover {
+        transform: translateY(-3px);
+        background-color: var(--paper);
+        box-shadow: var(--edge-strong), var(--shadow-paper);
+    }
+
+    .service:hover .service-number {
+        color: var(--azul);
+    }
+
+    .service:hover .service-arrow {
+        transform: translateX(3px);
+    }
+
+    /* La ficha señala su sello en el pliego */
+    .services:has(.service:nth-child(1):hover) .pane-stamp:nth-child(1),
+    .services:has(.service:nth-child(2):hover) .pane-stamp:nth-child(2),
+    .services:has(.service:nth-child(3):hover) .pane-stamp:nth-child(3),
+    .services:has(.service:nth-child(4):hover) .pane-stamp:nth-child(4) {
+        transform: translateY(-4px);
+        z-index: 1;
+    }
+}
+
+.service:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: var(--edge-strong), var(--shadow-pressed);
+    transition-duration: var(--dur-instant);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* Aparición al entrar en pantalla (script.js añade .reveal-ready y .is-visible) */
+.reveal-ready .reveal:not(.is-visible) {
+    opacity: 0;
+}
+
+.reveal.is-visible {
+    animation: reveal-in var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--stagger)) backwards;
+}
+
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
 }
 
 /* ===== Proceso: la ruta ===== */
@@ -787,18 +1027,55 @@ p {
 .app-card {
     display: flex;
     flex-direction: column;
-    padding: 1.75rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
     background-color: var(--paper);
-    box-shadow: var(--shadow-paper);
+    box-shadow: var(--edge), var(--shadow-paper);
     border-top: 6px solid transparent;
     border-image: var(--chevron) 6;
-    transition: transform var(--transition), box-shadow var(--transition);
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        box-shadow var(--dur-base) var(--ease-out);
 }
 
-.app-card:hover,
 .app-card:focus-within {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lift);
+    box-shadow: var(--edge-strong), var(--shadow-lift);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .app-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--edge-strong), var(--shadow-lift);
+    }
+}
+
+/* Un solo proyecto publicado: ficha apaisada a todo el ancho */
+@media (min-width: 861px) {
+    .apps-grid:has(> .app-card:only-child) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .app-card:only-child {
+        display: grid;
+        grid-template-columns: 88px minmax(0, 1fr) minmax(15rem, 17rem);
+        grid-template-areas:
+            "icon title   actions"
+            "icon desc    actions"
+            "icon tags    actions";
+        grid-template-rows: auto auto 1fr;
+        column-gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .app-card:only-child .app-icon { grid-area: icon; margin-bottom: 0; }
+    .app-card:only-child .app-title { grid-area: title; }
+    .app-card:only-child .app-description { grid-area: desc; max-width: 62ch; }
+    .app-card:only-child .app-tags { grid-area: tags; margin: 0; align-self: start; }
+
+    .app-card:only-child .app-actions {
+        grid-area: actions;
+        align-self: end;
+        padding-left: clamp(1.5rem, 3vw, 2.5rem);
+        border-left: 1px solid var(--azul-line);
+    }
 }
 
 .app-icon {
@@ -818,9 +1095,18 @@ p {
 }
 
 .app-card .app-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 800;
-    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+}
+
+.app-subtitle {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-soft);
 }
 
 .app-card .app-description {
@@ -835,10 +1121,16 @@ p {
     color: var(--azul);
 }
 
-.btn-play:hover,
 .btn-play:focus-visible {
     background-color: var(--azul);
     color: var(--on-azul);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-play:hover {
+        background-color: var(--azul);
+        color: var(--on-azul);
+    }
 }
 
 /* Proyectos sin ícono propio: monograma sobre el azul */
@@ -860,15 +1152,17 @@ p {
     list-style: none;
 }
 
+/* Etiquetas de tecnología: pequeñas etiquetas de envío, legibles */
 .app-tags li {
-    padding: 0.3rem 0.65rem;
-    border: 1.5px solid var(--azul-line);
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--azul-line);
     background-color: var(--azul-faint);
-    color: var(--azul);
-    font-size: 0.75rem;
-    font-weight: 800;
-    font-stretch: 120%;
+    color: var(--azul-deep);
+    font-size: 0.76rem;
+    font-weight: 700;
+    font-stretch: 115%;
     letter-spacing: 0.06em;
+    line-height: 1.3;
     text-transform: uppercase;
 }
 
@@ -880,6 +1174,7 @@ p {
 
 .app-actions .btn {
     width: 100%;
+    white-space: nowrap;
 }
 
 /* Separación entre los proyectos publicados y la próxima emisión */
@@ -964,7 +1259,9 @@ p {
     border: 0;
     border-bottom: 1.5px solid var(--azul-line);
     border-radius: 0;
-    transition: border-color var(--transition), background-color var(--transition);
+    transition:
+        border-color var(--dur-fast) var(--ease-out),
+        background-color var(--dur-fast) var(--ease-out);
 }
 
 /* Renglones de carta alineados con el texto */
@@ -980,9 +1277,11 @@ p {
     background-attachment: local;
 }
 
-.form-group input:hover,
-.form-group textarea:hover {
-    border-bottom-color: var(--azul);
+@media (hover: hover) and (pointer: fine) {
+    .form-group input:hover,
+    .form-group textarea:hover {
+        border-bottom-color: var(--azul);
+    }
 }
 
 .form-group input:focus,
@@ -1028,16 +1327,21 @@ p {
     min-width: 14rem;
 }
 
-.btn-submit:disabled {
-    opacity: 0.65;
+/* Mientras se envía: atenuado, sin hover ni active (cursor "wait" porque está trabajando) */
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active {
+    opacity: 0.5;
     cursor: wait;
     transform: none;
+    box-shadow: none;
+    transition: none;
 }
 
 .form-privacy {
     margin-top: -0.5rem;
     font-size: 0.88rem;
-    color: var(--ink-soft);
+    color: var(--ink-faint);
 }
 
 .form-privacy a,
@@ -1047,19 +1351,47 @@ p {
     text-decoration-thickness: 1px;
     text-decoration-color: var(--azul-line);
     text-underline-offset: 3px;
-    transition: text-decoration-color var(--transition);
+    transition: text-decoration-color var(--dur-fast) var(--ease-out);
 }
 
-.form-privacy a:hover,
 .form-privacy a:focus-visible,
-.legal a:not(.btn):hover,
 .legal a:not(.btn):focus-visible {
     text-decoration-color: var(--azul);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .form-privacy a:hover,
+    .legal a:not(.btn):hover {
+        text-decoration-color: var(--azul);
+    }
+}
+
+.form-privacy a:active,
+.legal a:not(.btn):active {
+    color: var(--azul-deep);
+    text-decoration-color: var(--azul-deep);
 }
 
 .form-status {
     min-height: 1.4em;
     font-weight: 600;
+}
+
+/* Mensajes de estado: fade + desplazamiento corto al aparecer */
+.form-status.is-success,
+.form-status.is-error {
+    animation: status-in var(--dur-slow) var(--ease-out) both;
+}
+
+@keyframes status-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .form-status:empty {
@@ -1091,7 +1423,7 @@ p {
 }
 
 .contact-form:has(.form-status.is-success) .sent-stamp {
-    animation: sent 0.55s var(--ease) forwards;
+    animation: sent var(--dur-sent) var(--ease) forwards;
 }
 
 .sent-stamp .pm-center {
@@ -1153,6 +1485,7 @@ p {
 
 .legal-updated {
     font-size: 0.95rem;
+    color: var(--ink-faint);
 }
 
 .legal p {
@@ -1307,20 +1640,35 @@ p {
 }
 
 .footer-links a {
-    display: inline-block;
-    padding: 0.35rem 0;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-size: 0.95rem;
     color: var(--on-azul-soft);
     text-decoration: underline;
     text-decoration-color: transparent;
     text-underline-offset: 4px;
-    transition: color var(--transition), text-decoration-color var(--transition);
+    transition:
+        color var(--dur-fast) var(--ease-out),
+        text-decoration-color var(--dur-fast) var(--ease-out);
 }
 
-.footer-links a:hover,
 .footer-links a:focus-visible {
     color: var(--on-azul);
     text-decoration-color: currentColor;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .footer-links a:hover {
+        color: var(--on-azul);
+        text-decoration-color: currentColor;
+    }
+}
+
+.footer-links a:active {
+    color: var(--on-azul);
+    opacity: 0.8;
+    transition-duration: var(--dur-instant);
 }
 
 .footer a:focus-visible {
@@ -1330,7 +1678,7 @@ p {
 .footer-copy {
     grid-column: 1 / -1;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(185, 205, 230, 0.2);
+    border-top: 1px solid var(--on-azul-line);
     font-size: 0.88rem;
 }
 
@@ -1374,7 +1722,7 @@ p {
     .navbar {
         flex-wrap: wrap;
         align-content: center;
-        row-gap: 0.35rem;
+        row-gap: 0.2rem;
     }
 
     .nav-links {
@@ -1383,16 +1731,19 @@ p {
         justify-content: space-between;
         gap: 0;
         border-top: 1px solid var(--azul-line);
-        padding-top: 0.2rem;
     }
 
     .nav-links li {
         flex: 1;
     }
 
+    /* Objetivo táctil de 44px */
     .nav-links a {
-        text-align: center;
-        padding: 0.5rem 0.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 0.25rem;
         font-size: 0.9rem;
     }
 
@@ -1434,11 +1785,12 @@ p {
     }
 
     .navbar {
-        gap: 1rem;
+        column-gap: 1rem;
     }
 
     .logo {
         gap: 0.55rem;
+        min-height: 44px;
     }
 
     .logo-img {
@@ -1452,7 +1804,7 @@ p {
     }
 
     .btn-nav {
-        min-height: 40px;
+        min-height: 44px;
         padding: 0.4rem 0.85rem;
         font-size: 0.85rem;
     }
@@ -1520,6 +1872,10 @@ p {
         font-size: 1.2rem;
     }
 
+    .catalog {
+        grid-template-columns: 1fr;
+    }
+
     .route-stops {
         grid-template-columns: 1fr;
         gap: 2.25rem;
@@ -1550,19 +1906,6 @@ p {
 
     .legal-toc {
         padding: 1.25rem;
-    }
-}
-
-/* En pantallas táctiles no se "queda pegado" el efecto hover */
-@media (hover: none) {
-    .btn:hover,
-    .app-card:hover,
-    .envelope:hover {
-        transform: none;
-    }
-
-    .envelope:hover {
-        transform: rotate(-3deg);
     }
 }
 

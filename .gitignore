@@ -1,3 +1,6 @@
 # Archivos locales de impeccable (preferencias y caché de sesión)
 .impeccable/config.local.json
 .impeccable/hook.cache.json
+
+# Capturas y snapshots de Playwright MCP
+.playwright-mcp/
