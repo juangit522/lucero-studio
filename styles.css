@@ -1264,6 +1264,11 @@ p {
         background-color var(--dur-fast) var(--ease-out);
 }
 
+/* Objetivo táctil de 44px */
+.form-group input {
+    min-height: 44px;
+}
+
 /* Renglones de carta alineados con el texto */
 .form-group textarea {
     --line: 2rem;
@@ -1642,6 +1647,7 @@ p {
 .footer-links a {
     display: inline-flex;
     align-items: center;
+    min-width: 44px;
     min-height: 44px;
     font-size: 0.95rem;
     color: var(--on-azul-soft);
