@@ -50,6 +50,10 @@
     /* Profundidad: sombras en dos capas (contacto + ambiental) teñidas de tinta */
     --shadow-paper: 0 1px 2px rgba(11, 37, 69, 0.08), 0 10px 28px -8px rgba(11, 37, 69, 0.22);
     --shadow-lift: 0 2px 4px rgba(11, 37, 69, 0.1), 0 18px 36px -10px rgba(11, 37, 69, 0.3);
+    /* Hover con inclinación: script.js fija --sx / --sy para que la sombra caiga lejos del cursor */
+    --shadow-cast:
+        calc(var(--sx, 0) * 0.3px) calc(3px + var(--sy, 0) * 0.3px) 5px rgba(11, 37, 69, 0.12),
+        calc(var(--sx, 0) * 1px) calc(22px + var(--sy, 0) * 1px) 40px -12px rgba(11, 37, 69, 0.34);
     --shadow-stamp: drop-shadow(0 2px 3px rgba(11, 37, 69, 0.18));
     /* Botón primario: filo de luz arriba (tinta fresca) + contacto + ambiental */
     --btn-edge: inset 0 1px 0 rgba(238, 244, 251, 0.22);
@@ -72,6 +76,7 @@
     --dur-stamp: 700ms;     /* matasellos del hero al cargar */
     --dur-sent: 550ms;      /* matasellos "ENVIADO" tras el envío */
     --dur-pulse: 2400ms;    /* piloto de "Disponible", indicador de estado continuo */
+    --dur-scene: 800ms;     /* fundido de entrada de la escena 3D del hero, una vez */
     --stagger: 50ms;        /* retardo entre elementos de una lista que aparece */
 
     /* Movimiento: curvas */
@@ -373,6 +378,8 @@ p {
 
 /* ===== Hero ===== */
 .hero {
+    position: relative;
+    isolation: isolate;
     max-width: var(--max-width);
     margin: 0 auto;
     min-height: min(100vh, 960px);
@@ -382,6 +389,70 @@ p {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     align-items: center;
     gap: clamp(2rem, 5vw, 5rem);
+}
+
+/* Escena 3D (hero3d.js): correo aéreo flotando detrás del contenido, a todo el ancho */
+.hero-scene {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-scene) var(--ease-out);
+    /* Detrás del texto el correo pasa en sordina: el titular sigue siendo el protagonista.
+       hero3d.js mide los bordes de .hero-copy en --copy-start / --copy-end (px). */
+    --scene-mask: linear-gradient(90deg,
+        rgba(0, 0, 0, 0.9) 0,
+        rgba(0, 0, 0, 0.18) var(--copy-start, 12%),
+        rgba(0, 0, 0, 0.18) var(--copy-end, 46%),
+        #000 calc(var(--copy-end, 46%) + 140px));
+    -webkit-mask-image: var(--scene-mask);
+    mask-image: var(--scene-mask);
+}
+
+/* Hero apilado: el texto va arriba y el sobre debajo */
+@media (max-width: 1024px) {
+    .hero-scene {
+        --scene-mask: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.2) 0,
+            rgba(0, 0, 0, 0.2) var(--copy-end, 66%),
+            #000 calc(var(--copy-end, 66%) + 70px));
+    }
+}
+
+.hero-scene.is-ready {
+    opacity: 1;
+}
+
+.hero-scene canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Lámpara de escritorio: luz suave que sigue al cursor sobre el onionskin.
+   Vive detrás del contenido (z-index -1), así que ilumina la mesa, no las hojas. */
+.lamp {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 1100px;
+    height: 1100px;
+    margin: -550px 0 0 -550px;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.35) 45%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0;
+    transition: opacity var(--dur-slow) var(--ease-out);
+    will-change: transform;
+}
+
+.lamp.is-on {
+    opacity: 1;
 }
 
 .hero h1 {
@@ -739,6 +810,7 @@ p {
 
 .service {
     position: relative;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1.4rem 1.1rem;
@@ -815,9 +887,9 @@ p {
 @media (hover: hover) and (pointer: fine) {
     /* --rx / --ry los fija script.js según la posición del ratón */
     .service:hover {
-        transform: perspective(900px) translateY(-3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        transform: perspective(1000px) translateY(-4px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
         background-color: var(--paper);
-        box-shadow: var(--edge-strong), var(--shadow-paper);
+        box-shadow: var(--edge-strong), var(--shadow-cast);
     }
 
     .service:hover .service-number {
@@ -1053,9 +1125,40 @@ p {
 
 @media (hover: hover) and (pointer: fine) {
     .app-card:hover {
-        transform: perspective(900px) translateY(-4px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-        box-shadow: var(--edge-strong), var(--shadow-lift);
+        transform: perspective(1000px) translateY(-4px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        box-shadow: var(--edge-strong), var(--shadow-cast);
     }
+}
+
+/* Profundidad: al inclinarse, el contenido se despega de la hoja en capas.
+   Cuanto más alto el translateZ, más "cerca" del visitante flota la pieza. */
+.service,
+.app-card {
+    transform-style: preserve-3d;
+}
+
+.service > *,
+.app-card > * {
+    transition: transform var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .service:hover .service-title { transform: translateZ(30px); }
+    .service:hover .service-text { transform: translateZ(16px); }
+    .service:hover .service-foot { transform: translateZ(40px); }
+
+    .app-card:hover .app-icon { transform: translateZ(44px); }
+    .app-card:hover .app-title { transform: translateZ(30px); }
+    .app-card:hover .app-description { transform: translateZ(14px); }
+    .app-card:hover .app-tags { transform: translateZ(22px); }
+    .app-card:hover .app-actions { transform: translateZ(40px); }
+}
+
+/* Al pulsar, la hoja se aplana contra la mesa y las capas vuelven a ella */
+.service:active > *,
+.app-card:active > * {
+    transform: none;
+    transition-duration: var(--dur-instant);
 }
 
 /* Un solo proyecto publicado: ficha apaisada a todo el ancho */

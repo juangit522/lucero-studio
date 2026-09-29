@@ -16,6 +16,9 @@
 
     <a href="#contenido" class="skip-link">Saltar al contenido</a>
 
+    <!-- Lámpara que sigue al cursor (script.js); solo con ratón -->
+    <div class="lamp" aria-hidden="true"></div>
+
     <!-- Barra de navegación -->
     <header class="header">
         <nav class="navbar" aria-label="Principal">
@@ -36,6 +39,9 @@
     <main id="contenido">
         <!-- Sección principal (Hero): la web como un aerograma dirigido al visitante -->
         <section id="inicio" class="hero">
+            <!-- Escena 3D decorativa: la dibuja hero3d.js si el dispositivo lo permite -->
+            <div class="hero-scene" aria-hidden="true"></div>
+
             <div class="hero-copy">
                 <h1>Hablas directo con quien diseña y programa tu app.</h1>
                 <p class="hero-lead">
@@ -339,6 +345,7 @@
     </footer>
 
     <script src="script.js" defer></script>
+    <script type="module" src="hero3d.js"></script>
 
 </body>
 </html>

@@ -5,7 +5,7 @@
 # otra página), inclúyelo también en esta lista.
 
 [build]
-  command = "rm -rf dist && mkdir dist && cp index.html privacidad.html styles.css script.js logo.jpg dist/"
+  command = "rm -rf dist && mkdir dist && cp index.html privacidad.html styles.css script.js hero3d.js logo.jpg dist/"
   publish = "dist"
 
 [[headers]]

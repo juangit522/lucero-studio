@@ -359,8 +359,9 @@
     /* ---------- Inclinación 3D de fichas y tarjetas (solo con ratón) ---------- */
     // JS solo fija --rx / --ry una vez por frame; la transición CSS de transform
     // suaviza el movimiento y lo devuelve a reposo al salir.
-    const TILT_MAX_DEG = 3;     // tope de DESIGN.md para objetos de papel
-    const TILT_MAX_DEPTH = 10;  // px que puede hundirse o levantarse un canto
+    const TILT_MAX_DEG = 8;     // tope de DESIGN.md para la inclinación en hover
+    const TILT_MAX_DEPTH = 40;  // px que puede hundirse o levantarse un canto
+    const SHADOW_SHIFT = 12;    // px que la sombra se aleja del cursor
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -388,14 +389,16 @@
             // El canto bajo el cursor se hunde, como una hoja que se presiona con el dedo.
             card.style.setProperty("--rx", (-ny * maxAngle(box.height)).toFixed(2) + "deg");
             card.style.setProperty("--ry", (nx * maxAngle(box.width)).toFixed(2) + "deg");
+            // La luz sale del cursor: la sombra cae hacia el lado contrario.
+            card.style.setProperty("--sx", (-nx * SHADOW_SHIFT).toFixed(1));
+            card.style.setProperty("--sy", (-ny * SHADOW_SHIFT).toFixed(1));
         }
 
         function reset() {
             cancelAnimationFrame(frame);
             frame = 0;
             box = null;
-            card.style.removeProperty("--rx");
-            card.style.removeProperty("--ry");
+            ["--rx", "--ry", "--sx", "--sy"].forEach((name) => card.style.removeProperty(name));
         }
 
         card.addEventListener("pointermove", (event) => {
@@ -410,6 +413,54 @@
         });
         card.addEventListener("pointerleave", reset);
     });
+
+    /* ---------- Toda la ficha de servicio lleva a su enlace ---------- */
+    // Con preserve-3d el clic lo recibe la capa más cercana (título, texto), no la
+    // superficie invisible de .service-link::after; se reenvía al enlace "Consultar".
+    document.querySelectorAll(".service").forEach((card) => {
+        const link = card.querySelector(".service-link");
+        if (!link) return;
+        card.addEventListener("click", (event) => {
+            if (event.target.closest("a")) return;
+            if (String(window.getSelection())) return; // estaba seleccionando texto
+            link.click();
+        });
+    });
+
+    /* ---------- Lámpara de escritorio que sigue al cursor ---------- */
+    // Solo se mueve con transform (compositor); el bucle se detiene al alcanzar al cursor.
+    const lamp = document.querySelector(".lamp");
+    if (lamp) {
+        const FOLLOW = 0.18; // fracción del camino que recorre por frame: sigue sin rebotar
+        let targetX = 0;
+        let targetY = 0;
+        let lampX = 0;
+        let lampY = 0;
+        let lampFrame = 0;
+
+        function moveLamp() {
+            lampX += (targetX - lampX) * FOLLOW;
+            lampY += (targetY - lampY) * FOLLOW;
+            lamp.style.transform = `translate3d(${lampX.toFixed(1)}px, ${lampY.toFixed(1)}px, 0)`;
+            const settled = Math.abs(targetX - lampX) < 0.5 && Math.abs(targetY - lampY) < 0.5;
+            lampFrame = settled ? 0 : requestAnimationFrame(moveLamp);
+        }
+
+        window.addEventListener("pointermove", (event) => {
+            if (event.pointerType !== "mouse" || !finePointer.matches || reducedMotion.matches) return;
+            targetX = event.clientX;
+            targetY = event.clientY;
+            if (!lamp.classList.contains("is-on")) {
+                // Primera aparición: se enciende donde está el cursor, sin viajar desde la esquina.
+                lampX = targetX;
+                lampY = targetY;
+                lamp.classList.add("is-on");
+            }
+            if (!lampFrame) lampFrame = requestAnimationFrame(moveLamp);
+        }, { passive: true });
+
+        document.documentElement.addEventListener("pointerleave", () => lamp.classList.remove("is-on"));
+    }
 
     /* ---------- "Consultar" en un servicio: lo anota en la carta si está vacía ---------- */
     const message = document.getElementById("message");

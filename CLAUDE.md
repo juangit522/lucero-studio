@@ -13,7 +13,7 @@ Este archivo define **cómo se mueve y responde** la interfaz: ingeniería de di
 
 1. **El movimiento tiene un propósito.** Toda animación explica algo: de dónde viene un elemento, qué se puede pulsar, qué acaba de pasar. Si no explica nada, se quita.
 2. **Rápido se siente mejor.** La interfaz responde en el mismo frame del gesto; la animación acompaña, nunca hace esperar.
-3. **Sutil por defecto.** Desplazamientos de 1-4px, escalas de 0.95-1, opacidades parciales. El usuario debe *sentir* la fluidez, no *verla*.
+3. **Sutil por defecto.** Desplazamientos de 1-4px, escalas de 0.95-1, opacidades parciales. El usuario debe *sentir* la fluidez, no *verla*. **Excepciones con impacto deliberado:** la inclinación con capas de las tarjetas, la escena 3D del hero y la lámpara (ver §5 y §9); son los únicos momentos donde el 3D se ve a propósito.
 4. **La frecuencia manda.** Cuanto más a menudo ocurre una interacción, menos se anima. Lo que se usa cien veces al día (teclado, foco, navegación repetida) no se anima o se anima al mínimo.
 5. **Interrumpible siempre.** Un hover que se retira a mitad de camino debe revertir desde donde está, sin saltos.
 
@@ -61,7 +61,7 @@ Usar siempre variables; nunca duraciones ni curvas sueltas en el CSS.
 - **Microinteracciones: 150-300ms.** Hover y active en `--dur-fast`; transiciones de componente en `--dur-base`; apariciones en `--dur-slow`.
 - **Nunca más de 300ms** en algo que responde a un gesto del usuario.
 - **Las salidas son más rápidas que las entradas** (≈ 70-80% de la duración de entrada). Un panel que entra en 300ms sale en 200ms.
-- **Excepción documentada:** la coreografía de carga del hero (sobre que se endereza en 0.8s, matasellos que estampa en 0.7s, "ENVIADO" en 0.55s) es un momento único, no una interacción repetida. Puede superar 300ms. También el piloto de "Disponible para nuevos proyectos" del hero (`--dur-pulse`, 2.4s en bucle): es un indicador de estado continuo, no responde a ningún gesto; solo anima `transform` y `opacity` de un pseudo-elemento de 8px. No añadir más excepciones sin justificarlas aquí.
+- **Excepción documentada:** la coreografía de carga del hero (sobre que se endereza en 0.8s, matasellos que estampa en 0.7s, "ENVIADO" en 0.55s) es un momento único, no una interacción repetida. Puede superar 300ms. También el piloto de "Disponible para nuevos proyectos" del hero (`--dur-pulse`, 2.4s en bucle): es un indicador de estado continuo, no responde a ningún gesto; solo anima `transform` y `opacity` de un pseudo-elemento de 8px. También la escena 3D del hero (`--dur-scene`, 800ms): se funde una sola vez al cargar y después flota en bucle; es ambiente, no respuesta a un gesto. No añadir más excepciones sin justificarlas aquí.
 
 ### Reglas de curva
 
@@ -104,7 +104,10 @@ Usar siempre variables; nunca duraciones ni curvas sueltas en el CSS.
 - **Elevación:** los elementos elevables suben 1-4px y pasan de `--shadow-paper` a `--shadow-lift` (o la sombra de botón más profunda). La sombra y el desplazamiento se mueven juntos, con la misma duración y curva.
 - **Color:** los enlaces cambian de `--ink-soft` a `--azul` en `--dur-fast`.
 - El área interactiva no cambia de tamaño en hover (evita que el layout "tiemble").
-- **Inclinación 3D** (solo `.service` y `.app-card`): `script.js` fija `--rx`/`--ry` una vez por frame según el ratón y la transición CSS de `transform` suaviza y devuelve a reposo. Tope de 3° (Paper Tilt Rule) y como mucho ~10px de hundimiento del canto, así que las tarjetas anchas se inclinan menos. Solo con `pointerType: "mouse"`, `(hover: hover) and (pointer: fine)` y sin `prefers-reduced-motion`.
+- **Inclinación 3D con capas** (solo `.service` y `.app-card`): `script.js` fija `--rx`/`--ry` una vez por frame según el ratón y la transición CSS de `transform` suaviza y devuelve a reposo. Tope de 8° y como mucho ~40px de hundimiento del canto, así que las tarjetas anchas se inclinan menos. Con `preserve-3d`, los hijos flotan con `translateZ` (14-44px); al pulsar vuelven a la hoja. La sombra cae lejos del cursor (`--sx`/`--sy` en `--shadow-cast`). Solo con `pointerType: "mouse"`, `(hover: hover) and (pointer: fine)` y sin `prefers-reduced-motion`.
+  - Con `preserve-3d` el clic lo recibe la capa más cercana, no un `::after` que cubra la tarjeta: la ficha entera se hace pulsable reenviando el clic al enlace en JS.
+  - Ningún hijo flotante puede llevar `overflow: hidden`, `opacity < 1` ni `filter` en la tarjeta: aplanan el 3D.
+- **Lámpara** (`.lamp`): luz suave del color del papel que sigue al cursor detrás del contenido (`z-index: -1`), así que ilumina el onionskin y no las hojas. Se mueve solo con `transform` y el bucle se detiene al alcanzar al cursor. Es luz de mesa, no un glow: nunca de color ni con halo sobre el contenido.
 
 ### Active (pulsación)
 - **Respuesta táctil inmediata:** `transform: scale(0.97)` o bajar 1px, en `--dur-instant`/`--dur-fast`.
@@ -174,6 +177,7 @@ Toda sombra es **al menos de dos capas**, teñida con la tinta (`rgba(11, 37, 69
 - Números que cambian: `font-variant-numeric: tabular-nums` para que no bailen.
 - Objetivos táctiles de al menos 44×44px; el feedback de `:active` es obligatorio en móvil porque no hay hover.
 - JS solo para lo que CSS no puede (observers, estado del formulario). Nada de librerías de animación: no hay build step.
+- **Única excepción: Three.js en `hero3d.js`**, para la escena del hero. Versión fija desde jsdelivr, importada dinámicamente tras `load` y en tiempo libre del navegador; no se descarga con `prefers-reduced-motion`. Pausa fuera de pantalla y con la pestaña oculta. En táctil o por debajo de 700px se dibuja **una sola vez, estática** y con menos piezas: medido con CPU a 4×, el bucle continuo ocupaba ~68% del hilo principal de un móvil mientras se veía el hero. Si Three.js o WebGL fallan, el hero queda como sin escena. Todo archivo nuevo de la web se añade también a la lista de `netlify.toml`.
 
 ---
 

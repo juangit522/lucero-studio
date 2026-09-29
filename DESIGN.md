@@ -137,7 +137,7 @@ The site is an airmail aerogramme: a letter answered by the people who build. Pa
 
 Density is calm and editorial. One display headline outranks everything else; section heads sit a clear step below it, each under a full-width 3px blue rule. Paper objects (envelope, stamp pane, issue sheet) tilt a few degrees and cast soft, layered paper shadows; interface chrome (header, buttons, fields, nav) stays square to the grid. Red appears only inside the airmail chevron ribbon that edges the header, the route band, the footer and the paper sheets.
 
-The world rejects the dark neon tech-agency look and its opposite, the white SaaS card grid. It is a postal world built entirely in code: stamps, postmarks and chevrons are CSS and inline SVG, and the only raster is the brand's own logo.
+The world rejects the dark neon tech-agency look and its opposite, the white SaaS card grid. It is a postal world built entirely in code: stamps, postmarks and chevrons are CSS and inline SVG, and the only raster is the brand's own logo. Behind the hero, airmail floats in 3D (envelopes, perforated stamps, postmarks drawn in code with Three.js), drifting left to right like mail in flight, stepping aside from the cursor and fading into the onionskin with depth; behind the headline it is muted so the headline stays the one protagonist.
 
 **Key Characteristics:**
 - Onionskin-blue ground with paper sheets on top, never white-on-white.
@@ -216,7 +216,9 @@ Depth is paper on paper: soft, two-layer, ink-tinted shadows that read as a shee
 - **Primary Button** (`box-shadow: 0 2px 4px rgba(11, 37, 69, 0.18), 0 8px 18px -8px rgba(14, 58, 107, 0.6)`, deepening on hover): the one piece of chrome that lifts.
 
 ### Named Rules
-**The Paper Tilt Rule.** Paper objects may rotate between -1deg and -3deg (envelope -3deg, stamp pane -1deg, issue sheet -1.5deg). Header, buttons, fields and text never rotate.
+**The Paper Tilt Rule.** At rest, paper objects may rotate between -1deg and -3deg (envelope -3deg, stamp pane -1deg, issue sheet -1.5deg). Header, buttons, fields and text never rotate at rest. On hover, service cards and app cards tilt in 3D toward the cursor, up to 8deg, and their content lifts off the sheet in layers; the sheet flattens back when pressed.
+
+**The Desk Lamp Rule.** A soft light the colour of letter paper follows the cursor across the onionskin, behind all content: it lights the desk, never the sheets. Card shadows fall away from the cursor, as if the light came from it. This is lamplight, not a glow: no colour, no halo over content.
 
 ## Shapes
 
@@ -235,7 +237,7 @@ Printed and firm.
 
 ### Cards / Containers
 - **Paper sheet:** Letter Paper, square corners, chevron top edge (10px on the letter and privacy page, 6px on app cards), Paper or Lift shadow.
-- **App card (template, not yet rendered):** 1.75rem padding, 88px app icon at 22% radius, title, description, full-width Google Play button; lifts 4px to the Lift shadow on hover.
+- **App card:** 1.75rem padding, 88px app icon at 22% radius, title, description, actions; on hover it lifts 4px, tilts toward the cursor and its icon, title, tags and actions float above the sheet.
 
 ### Inputs / Fields
 - **Style:** letter lines, not boxes. Transparent, no radius, 1.5px Guide Line baseline, Courier Prime text. The textarea is ruled with Guide Line every 2rem.
