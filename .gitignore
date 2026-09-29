@@ -4,3 +4,6 @@
 
 # Capturas y snapshots de Playwright MCP
 .playwright-mcp/
+
+# Salida del build de Netlify (se genera en el despliegue)
+dist/

@@ -1,0 +1,17 @@
+# Despliegue en Netlify: cada push a main publica la web automáticamente.
+# No hay build real (HTML/CSS/JS vanilla): el comando solo copia a dist/
+# los archivos públicos, para que no se sirvan CLAUDE.md, DESIGN.md,
+# PRODUCT.md ni .impeccable/. Si añades un archivo a la web (una imagen,
+# otra página), inclúyelo también en esta lista.
+
+[build]
+  command = "rm -rf dist && mkdir dist && cp index.html privacidad.html styles.css script.js logo.jpg dist/"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
