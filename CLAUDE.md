@@ -104,6 +104,7 @@ Usar siempre variables; nunca duraciones ni curvas sueltas en el CSS.
 - **Elevación:** los elementos elevables suben 1-4px y pasan de `--shadow-paper` a `--shadow-lift` (o la sombra de botón más profunda). La sombra y el desplazamiento se mueven juntos, con la misma duración y curva.
 - **Color:** los enlaces cambian de `--ink-soft` a `--azul` en `--dur-fast`.
 - El área interactiva no cambia de tamaño en hover (evita que el layout "tiemble").
+- **Inclinación 3D** (solo `.service` y `.app-card`): `script.js` fija `--rx`/`--ry` una vez por frame según el ratón y la transición CSS de `transform` suaviza y devuelve a reposo. Tope de 3° (Paper Tilt Rule) y como mucho ~10px de hundimiento del canto, así que las tarjetas anchas se inclinan menos. Solo con `pointerType: "mouse"`, `(hover: hover) and (pointer: fine)` y sin `prefers-reduced-motion`.
 
 ### Active (pulsación)
 - **Respuesta táctil inmediata:** `transform: scale(0.97)` o bajar 1px, en `--dur-instant`/`--dur-fast`.
@@ -159,7 +160,7 @@ Toda sombra es **al menos de dos capas**, teñida con la tinta (`rgba(11, 37, 69
 
 ## 8. Apariciones y listas
 
-- **Entrada estándar:** `opacity: 0 → 1` + `translateY(8px) → 0` (o `scale(0.95) → 1`), `--dur-slow`, `--ease-out`.
+- **Entrada estándar (`.reveal`):** la hoja se levanta de la mesa: `opacity: 0 → 1` + `translateY(12px) rotateX(6deg) → 0` con `perspective(900px)` y origen en el canto inferior, `--dur-slow`, `--ease-out`. Los objetos de papel con giro en reposo lo declaran en `--rest-rotate` para que la entrada lo conserve.
 - **Stagger** en listas y grids: 30-60ms entre elementos, máximo ~6 escalonados; el resto entra con el último.
 - Animaciones de scroll con `IntersectionObserver`, una sola vez por elemento (`unobserve` tras entrar). Nada ligado frame a frame al scroll.
 - Mensajes de estado del formulario (éxito/error) aparecen con fade + desplazamiento corto; se anuncian con `aria-live`.

@@ -356,6 +356,61 @@
         items.forEach((item) => observer.observe(item));
     }
 
+    /* ---------- Inclinación 3D de fichas y tarjetas (solo con ratón) ---------- */
+    // JS solo fija --rx / --ry una vez por frame; la transición CSS de transform
+    // suaviza el movimiento y lo devuelve a reposo al salir.
+    const TILT_MAX_DEG = 3;     // tope de DESIGN.md para objetos de papel
+    const TILT_MAX_DEPTH = 10;  // px que puede hundirse o levantarse un canto
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Ángulo con el que un canto a size/2 del centro se desplaza TILT_MAX_DEPTH en profundidad:
+    // así una ficha pequeña y la tarjeta apaisada se inclinan con el mismo "peso".
+    function maxAngle(size) {
+        const deg = (Math.atan(TILT_MAX_DEPTH / (size / 2)) * 180) / Math.PI;
+        return Math.min(TILT_MAX_DEG, deg);
+    }
+
+    function clamp(value) {
+        return Math.max(-1, Math.min(1, value));
+    }
+
+    document.querySelectorAll(".service, .app-card").forEach((card) => {
+        let box = null; // posición en coordenadas de página: no caduca al hacer scroll
+        let pageX = 0;
+        let pageY = 0;
+        let frame = 0;
+
+        function update() {
+            frame = 0;
+            const nx = clamp(((pageX - box.left) / box.width) * 2 - 1);
+            const ny = clamp(((pageY - box.top) / box.height) * 2 - 1);
+            // El canto bajo el cursor se hunde, como una hoja que se presiona con el dedo.
+            card.style.setProperty("--rx", (-ny * maxAngle(box.height)).toFixed(2) + "deg");
+            card.style.setProperty("--ry", (nx * maxAngle(box.width)).toFixed(2) + "deg");
+        }
+
+        function reset() {
+            cancelAnimationFrame(frame);
+            frame = 0;
+            box = null;
+            card.style.removeProperty("--rx");
+            card.style.removeProperty("--ry");
+        }
+
+        card.addEventListener("pointermove", (event) => {
+            if (event.pointerType !== "mouse" || !finePointer.matches || reducedMotion.matches) return;
+            if (!box) {
+                const rect = card.getBoundingClientRect();
+                box = { left: rect.left + window.scrollX, top: rect.top + window.scrollY, width: rect.width, height: rect.height };
+            }
+            pageX = event.pageX;
+            pageY = event.pageY;
+            if (!frame) frame = requestAnimationFrame(update);
+        });
+        card.addEventListener("pointerleave", reset);
+    });
+
     /* ---------- "Consultar" en un servicio: lo anota en la carta si está vacía ---------- */
     const message = document.getElementById("message");
     if (!message) return;

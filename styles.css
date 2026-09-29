@@ -656,7 +656,8 @@ p {
     padding: 0.9rem 1.1rem 1.25rem;
     background-color: #ffffff;
     box-shadow: var(--shadow-paper);
-    transform: rotate(-1deg);
+    --rest-rotate: -1deg;
+    transform: rotate(var(--rest-rotate));
 }
 
 .pane-selvage {
@@ -812,8 +813,9 @@ p {
 }
 
 @media (hover: hover) and (pointer: fine) {
+    /* --rx / --ry los fija script.js según la posición del ratón */
     .service:hover {
-        transform: translateY(-3px);
+        transform: perspective(900px) translateY(-3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
         background-color: var(--paper);
         box-shadow: var(--edge-strong), var(--shadow-paper);
     }
@@ -860,10 +862,18 @@ p {
     animation: reveal-in var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--stagger)) backwards;
 }
 
+/* La hoja se levanta de la mesa: sube y se endereza desde su canto inferior.
+   rotate() conserva el giro en reposo de los objetos de papel (--rest-rotate). */
 @keyframes reveal-in {
     from {
         opacity: 0;
-        transform: translateY(8px);
+        transform-origin: 50% 100%;
+        transform: perspective(900px) translateY(12px) rotateX(6deg) rotate(var(--rest-rotate, 0deg));
+    }
+    to {
+        opacity: 1;
+        transform-origin: 50% 100%;
+        transform: perspective(900px) translateY(0) rotateX(0deg) rotate(var(--rest-rotate, 0deg));
     }
 }
 
@@ -1043,7 +1053,7 @@ p {
 
 @media (hover: hover) and (pointer: fine) {
     .app-card:hover {
-        transform: translateY(-4px);
+        transform: perspective(900px) translateY(-4px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
         box-shadow: var(--edge-strong), var(--shadow-lift);
     }
 }
